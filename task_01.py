@@ -1,26 +1,30 @@
 from datetime import datetime
 
 
-def get_days_from_today(date: str):
-    parsed_date = parse_date(date)
-
-    if not parsed_date:
-        return
-
+def get_days_from_today(date_str: str) -> int:
+    in_date = parse_date(date_str)
+    
+    if (not in_date):
+        return None
+    
     cur_date = datetime.today()
 
-    return (cur_date - parsed_date).days
+    return (cur_date - in_date).days
+
+def parse_date(date_str: str) -> datetime:
+    try:
+        return datetime.strptime(date_str, '%Y-%m-%d')
+    except Exception:
+        print("Invalid date format. Expected 'YYYY-MM-DD'")
+
+        return None
+
 
 # testing
-
-def parse_date(in_date: str):
-    date_format = '%Y-%m-%d'
-    try:
-        return datetime.strptime(in_date, date_format)
-    except Exception:
-        print("Invalid date format. Please enter a date in YYYY-MM-DD format")
 
 
 while True:
     date_str = input("Enter a date (YYYY-MM-DD): ")
-    print(f"Days difference: {get_days_from_today(date_str)}")
+    date_diff = get_days_from_today(date_str)
+
+    print(f"Days difference: {date_diff}")
